@@ -9,7 +9,7 @@ function str(prim) {
 
 function Landing(Props) {
   return React.createElement("div", {
-              className: "h-screen justify-center flex items-center absolute"
+              className: "h-screen justify-center flex items-center"
             }, React.createElement("div", {
                   className: "max-w-sm rounded shadow-lg p-4"
                 }, React.createElement("div", {
@@ -19,6 +19,7 @@ function Landing(Props) {
                         }, "Reserve Equipment"), React.createElement("p", {
                           className: "text-gray-700 text-base"
                         }, "Book an equipment reservation"), React.createElement(DatePicker, {
+                          isOpen: true,
                           calendarClassName: "bg-white"
                         }))));
 }
