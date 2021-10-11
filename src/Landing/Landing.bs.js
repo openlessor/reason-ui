@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require("react");
+var InventoryList$ReasonUi = require("../InventoryList/InventoryList.bs.js");
 var DatePicker = require("react-date-picker/dist/DatePicker").default;
 
 function str(prim) {
@@ -21,7 +22,7 @@ function Landing(Props) {
                         }, "Book an equipment reservation"), React.createElement(DatePicker, {
                           isOpen: true,
                           calendarClassName: "bg-white"
-                        }))));
+                        }), React.createElement(InventoryList$ReasonUi.make, {}))));
 }
 
 var make = Landing;
