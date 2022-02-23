@@ -6,6 +6,8 @@ Using the following third party tools and libraries:
 
 Written using ReScript and React. This is a work in progress. In it's current state, it should not be used by anyone.
 
+Documentation on actaully running the POC coming soon.
+
 ## Plans for Frontend POC
 - Hardware Cloud Equipment Rental
 - Apartment / Room Rental
