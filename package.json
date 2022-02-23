@@ -19,20 +19,18 @@
   "dependencies": {
     "@davesnx/styled-ppx": "^0.25.0",
     "@mobily/rescript-date": "^2.1.0",
-    "bs-css-emotion": "^4.0.1",
+    "@rescript/react": "^0.10.3",
     "light-icons": "^1.0.10",
     "react": "^16.13.1",
     "react-date-picker": "^8.3.4",
-    "react-dom": "^16.13.1",
-    "reason-react": ">=0.9.1"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@greenlabs/res-tailwindcss": "^0.1.6",
     "autoprefixer": "^10.3.7",
-    "bs-css": "^15.0.1",
-    "bs-platform": "^9.0.2",
     "parcel": "^2.0.0",
     "postcss": "^8.3.9",
+    "postcss-modules": "^4.3.0",
+    "rescript": "^9.1.4",
     "tailwindcss": "^3.0.23"
   }
 }

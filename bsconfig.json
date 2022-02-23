@@ -17,20 +17,11 @@
       "in-source": true
     }
   ],
-  "suffix": ".bs.js",
+  "suffix": ".mjs",
   "namespace": true,
   "bs-dependencies": [
-    "reason-react",
-    "bs-css",
-    "bs-css-emotion",
+    "@rescript/react",
     "@mobily/rescript-date"
-  ],
-  "ppx-flags": [
-    "@davesnx/styled-ppx/ppx",
-    [
-      "@greenlabs/res-tailwindcss/ppx",
-      "--path ./dist/tailwind.css"
-    ]
   ],
   "refmt": 3
 }

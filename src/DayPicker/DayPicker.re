@@ -1,2 +1,0 @@
-[@bs.module "react-date-picker/dist/DatePicker"][@react.component]
-external make: (~className: string, ~minDate: Js.Date.t, ~value: Js.Date.t, ~isOpen: bool, ~calendarClassName: string, ~onChange: (Js.Date.t => Js.Date.t) => unit) => React.element = "default";
