@@ -11,7 +11,9 @@ Documentation on actaully running the POC coming soon.
 ## Plans for Frontend POC
 - Hardware Cloud Equipment Rental
 - Apartment / Room Rental
-- Cloud Server (with multiple billing types; such as per minute, per month)
+- Cloud Server
+
+All with multiple billing types depending on if it fits the use case; such as per minute, per day, per week, per month.
 
 ## Vision
 
