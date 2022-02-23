@@ -1,6 +1,7 @@
 .tailwind_ppx_cache
 dist
 .cache
+.parcel-cache
 .DS_Store
 .merlin
 .bsb.lock

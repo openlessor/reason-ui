@@ -22,11 +22,15 @@
   "bs-dependencies": [
     "reason-react",
     "bs-css",
-    "bs-css-emotion"
+    "bs-css-emotion",
+    "@mobily/rescript-date"
   ],
   "ppx-flags": [
     "@davesnx/styled-ppx/ppx",
-    ["tailwind-ppx", "-path ./node_modules/tailwindcss/dist/tailwind.css"]
+    [
+      "@greenlabs/res-tailwindcss/ppx",
+      "--path ./dist/tailwind.css"
+    ]
   ],
   "refmt": 3
 }
