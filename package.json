@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "parcel ./index.html",
-    "build": "bsb -make-world",
-    "start": "bsb -make-world -w -ws _ ",
-    "clean": "bsb -clean-world",
+    "build": "rescript build",
+    "start": "rescript build -with-deps -w -ws _ ",
+    "clean": "rescript clean",
     "server": "moduleserve ./ --port 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +26,7 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "autoprefixer": "^10.3.7",
     "parcel": "^2.0.0",
     "postcss": "^8.3.9",
