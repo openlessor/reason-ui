@@ -12,6 +12,8 @@ function str(prim) {
   return prim;
 }
 
+var mockItems = (require('./inventory.json'));
+
 var cmp = Caml_obj.caml_compare;
 
 var IntCmp = Belt_Id.MakeComparable({
@@ -40,17 +42,30 @@ function InventoryList(Props) {
                   }
                 }));
   };
-  var items = [];
-  for(var x = 1; x <= 15; ++x){
-    items.push(React.createElement(InventoryItem$ReasonUi.make, {
-              id: x,
-              title: "Cisco 80" + String(x) + "0 Router",
-              description: "Core network infrastructure router for testing and development",
-              toggleSelection: toggleSelection,
-              selection: selection,
-              key: String(x)
-            }));
-  }
+  var unselectedItems = mockItems.filter(function (item) {
+          return !Belt_Set.has(selection, item.id);
+        }).map(function (item) {
+        return React.createElement(InventoryItem$ReasonUi.make, {
+                    id: item.id,
+                    title: item.name,
+                    description: item.description,
+                    toggleSelection: toggleSelection,
+                    hideDescription: false,
+                    key: String(item.id)
+                  });
+      });
+  var selectedItems = mockItems.filter(function (item) {
+          return Belt_Set.has(selection, item.id);
+        }).map(function (item) {
+        return React.createElement(InventoryItem$ReasonUi.make, {
+                    id: item.id,
+                    title: item.name,
+                    description: item.description,
+                    toggleSelection: toggleSelection,
+                    hideDescription: true,
+                    key: String(item.id)
+                  });
+      });
   return React.createElement("div", {
               className: "bg-slate-200 w-[100%] rounded p-1"
             }, React.createElement("div", {
@@ -61,16 +76,25 @@ function InventoryList(Props) {
                           className: "m-2 align-middle text-3xl font-light"
                         }, React.createElement("i", {
                               className: "light-icon-search"
-                            })), "Select equipment to rent"), React.createElement("span", {
-                      className: "m-4 text-gray-500 text-lg shadow-lg"
-                    }, heading), React.createElement("div", {
+                            })), "Available equipment", React.createElement("span", {
+                          className: "m-4 text-gray-500 text-lg shadow-lg"
+                        }, heading)), React.createElement("div", {
                       className: "grid grid-cols-8 gap-4"
-                    }, items)));
+                    }, unselectedItems), React.createElement("h1", {
+                      className: "block font-bold align-middle text-gray-700 text-base m-2 text-3xl"
+                    }, React.createElement("span", {
+                          className: "m-2 align-middle text-3xl font-light"
+                        }, React.createElement("i", {
+                              className: "light-icon-shopping-cart"
+                            })), "Selected equipment"), React.createElement("div", {
+                      className: "grid grid-cols-10 gap-2"
+                    }, selectedItems)));
 }
 
 var make = InventoryList;
 
 exports.str = str;
+exports.mockItems = mockItems;
 exports.IntCmp = IntCmp;
 exports.make = make;
-/* IntCmp Not a pure module */
+/* mockItems Not a pure module */

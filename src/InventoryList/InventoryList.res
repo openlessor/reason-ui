@@ -1,4 +1,5 @@
 let str = React.string
+let mockItems = %raw(`require('./inventory.json')`)
 
 module IntCmp =
   Belt.Id.MakeComparable({
@@ -35,18 +36,31 @@ let make = (~openDate, ~closeDate) => {
     })
   }
 
-  let items = []
-  for x in 1 to 15 {
-    Js.Array2.push(items, 
-      <InventoryItem
-          key={Belt.Int.toString(x)}
-          id={x}
-          title={"Cisco 80" ++ Belt.Int.toString(x) ++ "0 Router"}
-          description="Core network infrastructure router for testing and development"
-          toggleSelection={toggleSelection}
-          selection={selection}
-      />)->ignore
-  }
+  let unselectedItems = Js.Array.map((item) =>
+   <InventoryItem
+      key={Belt.Int.toString(item["id"])}
+      id={item["id"]}
+      title={item["name"]}
+      description={item["description"]}
+      toggleSelection={toggleSelection}
+      hideDescription={false}
+    />,
+    Js.Array.filter((item) => {
+      !Belt.Set.has(selection, item["id"])
+  }, mockItems))
+
+  let selectedItems = Js.Array.map((item) =>
+   <InventoryItem
+      key={Belt.Int.toString(item["id"])}
+      id={item["id"]}
+      title={item["name"]}
+      description={item["description"]}
+      hideDescription={true}
+      toggleSelection={toggleSelection}
+    />,
+    Js.Array.filter((item) => {
+      Belt.Set.has(selection, item["id"])
+  }, mockItems))
 
   <div className="bg-slate-200 w-[100%] rounded p-1">
     <div className="m-4 px-1 py-1">
@@ -54,12 +68,21 @@ let make = (~openDate, ~closeDate) => {
         <span className="m-2 align-middle text-3xl font-light">
           <i className="light-icon-search" />
         </span>
-        {"Select equipment to rent" |> str}
+        {"Available equipment" |> str}
+        <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
       </h1>
-      <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
       <div className="grid grid-cols-8 gap-4">
-        {items |> React.array}
+        {unselectedItems |> React.array}
       </div>
+      <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">
+        <span className="m-2 align-middle text-3xl font-light">
+          <i className="light-icon-shopping-cart"></i>
+        </span>
+        {"Selected equipment" |> str}
+      </h1>
+      <div className="grid grid-cols-10 gap-2">
+        {selectedItems |> React.array}
+      </div> 
     </div>
   </div>
 }
