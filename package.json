@@ -22,7 +22,7 @@
     "@rescript/react": "^0.10.3",
     "light-icons": "^1.0.10",
     "react": "^16.13.1",
-    "react-date-picker": "^8.3.4",
+    "react-datepicker": "^4.7.0",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {

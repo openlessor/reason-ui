@@ -7,9 +7,6 @@ var Landing$ReasonUi = require("./Landing/Landing.mjs");
 require("./tailwind.css")
 ;
 
-require("react-date-picker/dist/DatePicker.css")
-;
-
 require("light-icons/dist/light-icon.css")
 ;
 

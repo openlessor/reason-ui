@@ -35,7 +35,7 @@ let make = (~dateA = ?, ~dateB = ?) => {
                     </span> 
                     {"Select your reservation start date: " |> str}
                 </p>
-                <DayPicker minDate={today} onChange={updateDate} isOpen={false} className="m-2 ml-14 block" calendarClassName="bg-white" value={openDate} />
+                <DatePicker minDate={today} onChange={updateDate} isOpen={false} className="m-2 ml-14 block" calendarClassName="bg-white" selected={openDate} />
                 <p className="block align-middle text-gray-700 text-base m-2">
                     <span className="m-2 align-middle text-3xl font-light">
                         <i className="light-icon-file-invoice"></i>

@@ -2,9 +2,9 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var DatePicker$ReasonUi = require("../DatePicker/DatePicker.mjs");
 var InventoryList$ReasonUi = require("../InventoryList/InventoryList.mjs");
 var ReservationTypeSelection$ReasonUi = require("../ReservationTypeSelection/ReservationTypeSelection.mjs");
-var DatePicker = require("react-date-picker/dist/DatePicker").default;
 
 function str(prim) {
   return prim;
@@ -61,13 +61,13 @@ function Landing(Props) {
                               className: "m-2 align-middle text-3xl font-light"
                             }, React.createElement("i", {
                                   className: "light-icon-calendar"
-                                })), "Select your reservation start date: "), React.createElement(DatePicker, {
-                          className: "m-2 ml-14 block",
+                                })), "Select your reservation start date: "), React.createElement(DatePicker$ReasonUi.make, {
                           minDate: today,
-                          value: openDate,
+                          onChange: updateDate,
                           isOpen: false,
+                          className: "m-2 ml-14 block",
                           calendarClassName: "bg-white",
-                          onChange: updateDate
+                          selected: openDate
                         }), React.createElement("p", {
                           className: "block align-middle text-gray-700 text-base m-2"
                         }, React.createElement("span", {
