@@ -1,23 +1,22 @@
-let str = React.string;
-//let logo: string = [%raw "require('./assets/logo.png')"];
+let str = React.string
 
 @react.component
 let make = (~dateA = ?, ~dateB = ?) => {
-    let now = Js.Date.make();
-    let today = Js.Date.fromFloat(Js.Date.setHoursMSMs(now, ~hours=0.0, ~minutes=0.0, ~seconds=0.0, ~milliseconds=0.0, ()));
+    let now = Js.Date.make()
+    let today = Js.Date.fromFloat(Js.Date.setHoursMSMs(now, ~hours=0.0, ~minutes=0.0, ~seconds=0.0, ~milliseconds=0.0, ()))
 
     let (openDate, setOpenDate) = React.useState(() => (switch dateA {
         | Some(date) => Js.Date.fromString(date)
         | None => today
-    }));
+    }))
     let (closeDate, setCloseDate) = React.useState(() => (switch dateB {
         | Some(date) => Js.Date.fromString(date)
         | None => openDate
-    }));
+    }))
     let updateDate = (openDate) => {
-        setOpenDate(openDate);
-        setCloseDate(openDate);
-    };
+        setOpenDate(openDate)
+        setCloseDate(openDate)
+    }
 
     Js.Console.log([now, today, openDate, closeDate])
 
@@ -48,4 +47,4 @@ let make = (~dateA = ?, ~dateB = ?) => {
             </div>
         </div>
     </div>
-};
+}

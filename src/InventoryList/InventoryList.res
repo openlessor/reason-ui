@@ -1,5 +1,10 @@
 let str = React.string
-//let logo: string = [%raw "require('./assets/logo.png')";
+
+module IntCmp =
+  Belt.Id.MakeComparable({
+    type t = int
+    let cmp = Pervasives.compare
+  })
 
 @react.component
 let make = (~openDate, ~closeDate) => {
@@ -17,21 +22,30 @@ let make = (~openDate, ~closeDate) => {
       "Showing " ++ filterType ++ " equipment available on " ++ Js.Date.toLocaleDateString(openDate)
     } else {
       // The open date and close date are at least 1 day apart
-      "Showing " ++
-      filterType ++
-      " equipment available from " ++
-      Js.Date.toLocaleDateString(openDate) ++
-      " to " ++
-      Js.Date.toLocaleDateString(closeDate)
+      "Showing " ++ filterType ++ " equipment available from " ++ Js.Date.toLocaleDateString(openDate) ++ " to " ++ Js.Date.toLocaleDateString(closeDate)
     }
   }
-  let items = [];
+  
+  let (selection, setSelection) = React.useState(_ => Belt.Set.make(~id=module(IntCmp)))
+  let toggleSelection = (_e, id) => {
+    setSelection(_prev => if Belt.Set.has(selection, id) {
+      Belt.Set.remove(selection, id)
+    } else {
+      Belt.Set.add(selection, id)
+    })
+  }
+
+  let items = []
   for x in 1 to 15 {
-    Js.Array2.push(items, <InventoryItem
+    Js.Array2.push(items, 
+      <InventoryItem
+          key={Belt.Int.toString(x)}
           id={x}
-          title={"Cisco 800" ++ Belt.Int.toString(Js.Math.random_int(1, 9)) ++ " Router"}
+          title={"Cisco 80" ++ Belt.Int.toString(x) ++ "0 Router"}
           description="Core network infrastructure router for testing and development"
-        />)->ignore;
+          toggleSelection={toggleSelection}
+          selection={selection}
+      />)->ignore
   }
 
   <div className="bg-slate-200 w-[100%] rounded p-1">
@@ -42,8 +56,8 @@ let make = (~openDate, ~closeDate) => {
         </span>
         {"Select equipment to rent" |> str}
       </h1>
-      <span className="m-4 text-gray-500 text-lg shadow-lg"> {heading |> str} </span>
-      <div className="grid grid-cols-4 gap-4">
+      <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
+      <div className="grid grid-cols-8 gap-4">
         {items |> React.array}
       </div>
     </div>

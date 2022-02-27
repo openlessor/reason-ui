@@ -8,28 +8,32 @@ function str(prim) {
 
 function ReservationTypeSelection(Props) {
   return React.createElement("div", {
-              className: "m-2 ml-12 block"
-            }, React.createElement("span", {
+              className: "ml-10"
+            }, React.createElement("div", {
                   className: "inline-block"
                 }, React.createElement("label", {
                       htmlFor: "type_hour"
                     }, React.createElement("input", {
-                          className: "ml-1 mr-1",
+                          className: "m-1",
                           id: "type_hour",
                           name: "type",
                           type: "radio",
                           value: "hour"
-                        }), React.createElement("span", undefined, " Hourly"))), React.createElement("span", {
+                        }), React.createElement("span", {
+                          className: "p-1 pl-0"
+                        }, " Hourly"))), React.createElement("div", {
                   className: "inline-block"
                 }, React.createElement("label", {
                       htmlFor: "type_date"
                     }, React.createElement("input", {
-                          className: "ml-4 mr-1",
+                          className: "m-1",
                           id: "type_date",
                           name: "type",
                           type: "radio",
                           value: "date"
-                        }), React.createElement("span", undefined, " Until specified date"))));
+                        }), React.createElement("span", {
+                          className: "p-1 pl-0"
+                        }, " Until specified date"))));
 }
 
 var make = ReservationTypeSelection;

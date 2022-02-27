@@ -2,6 +2,7 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var Belt_Set = require("rescript/lib/js/belt_Set.js");
 
 function str(prim) {
   return prim;
@@ -10,32 +11,28 @@ function str(prim) {
 var placeholderImg = (require("../assets/placeholder_1.png"));
 
 function InventoryItem(Props) {
+  var id = Props.id;
   var title = Props.title;
   var description = Props.description;
-  var match = React.useState(function () {
-        return false;
-      });
-  var setSelected = match[1];
-  var selected = match[0];
-  var toggle = function (e) {
-    return Curry._1(setSelected, (function (_prev) {
-                  return !selected;
-                }));
-  };
+  var toggleSelection = Props.toggleSelection;
+  var selection = Props.selection;
+  var selected = Belt_Set.has(selection, id);
   return React.createElement("button", {
               className: (
-                selected ? "brightness-100 order-first" : "brightness-50"
+                selected ? "order-first brightness-100" : "brightness-50"
               ) + " transition-order hover:brightness-100 block bg-white p-4 rounded shadow m-1",
-              onClick: toggle
+              onClick: (function (e) {
+                  return Curry._2(toggleSelection, e, id);
+                })
             }, React.createElement("img", {
                   style: {
                     width: "100%"
                   },
                   src: placeholderImg
                 }), React.createElement("h2", {
-                  className: "text-lg font-bold"
+                  className: "text-sm font-bold"
                 }, title), React.createElement("p", {
-                  className: "text-sm"
+                  className: "text-xs"
                 }, description));
 }
 
