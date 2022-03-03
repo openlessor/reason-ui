@@ -39,9 +39,7 @@ let make = (~openDate, ~closeDate, ~items: array<ExecutorHook.ExecutorConfig.Inv
   let unselectedItems = Js.Array.map((item: ExecutorHook.ExecutorConfig.InventoryItem.t) =>
    <InventoryItem
       key={Belt.Int.toString(item.id)}
-      id={item.id}
-      title={item.title}
-      description={item.description}
+      item={item}
       toggleSelection={toggleSelection}
       hideDescription={false}
     />,
@@ -52,9 +50,7 @@ let make = (~openDate, ~closeDate, ~items: array<ExecutorHook.ExecutorConfig.Inv
   let selectedItems = Js.Array.map((item: ExecutorHook.ExecutorConfig.InventoryItem.t) =>
    <InventoryItem
       key={Belt.Int.toString(item.id)}
-      id={item.id}
-      title={item.title}
-      description={item.description}
+      item={item} 
       hideDescription={true}
       toggleSelection={toggleSelection}
     />,
@@ -71,7 +67,7 @@ let make = (~openDate, ~closeDate, ~items: array<ExecutorHook.ExecutorConfig.Inv
         {"Available equipment" |> str}
         <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
       </h1>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="place-content-start grid grid-cols-4 gap-4">
         {unselectedItems |> React.array}
       </div>
       <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">

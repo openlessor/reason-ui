@@ -46,9 +46,7 @@ function InventoryList(Props) {
           return !Belt_Set.has(selection, item.id);
         }).map(function (item) {
         return React.createElement(InventoryItem$ReasonUi.make, {
-                    id: item.id,
-                    title: item.title,
-                    description: item.description,
+                    item: item,
                     toggleSelection: toggleSelection,
                     hideDescription: false,
                     key: String(item.id)
@@ -58,9 +56,7 @@ function InventoryList(Props) {
           return Belt_Set.has(selection, item.id);
         }).map(function (item) {
         return React.createElement(InventoryItem$ReasonUi.make, {
-                    id: item.id,
-                    title: item.title,
-                    description: item.description,
+                    item: item,
                     toggleSelection: toggleSelection,
                     hideDescription: true,
                     key: String(item.id)
@@ -79,7 +75,7 @@ function InventoryList(Props) {
                             })), "Available equipment", React.createElement("span", {
                           className: "m-4 text-gray-500 text-lg shadow-lg"
                         }, heading)), React.createElement("div", {
-                      className: "grid grid-cols-4 gap-4"
+                      className: "place-content-start grid grid-cols-4 gap-4"
                     }, unselectedItems), React.createElement("h1", {
                       className: "block font-bold align-middle text-gray-700 text-base m-2 text-3xl"
                     }, React.createElement("span", {

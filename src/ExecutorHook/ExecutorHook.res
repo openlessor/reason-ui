@@ -3,7 +3,8 @@ module ExecutorConfig = {
         type t = {
             id: int,
             title: string,
-            description: string
+            description: string,
+            image: string
         }
     }
     type t = {
