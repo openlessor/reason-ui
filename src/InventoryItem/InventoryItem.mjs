@@ -32,10 +32,20 @@ function InventoryItem(Props) {
                         hideDescription ? "hidden " : ""
                       ) + "text-xs m-4"
                     }, item.description)), React.createElement("div", {
-                  className: "opacity-50 z-10 top-0 left-0 text-3xl font-bold absolute h-full w-full hover:bg-slate-100 hidden hover:block justify-self-end"
-                }, React.createElement("i", {
-                      className: "light-icon-plus relative top-[100%]"
-                    })));
+                  className: "group hover:opacity-50 inset-0 z-10 top-0 left-0 font-bold absolute h-full w-full hover:bg-slate-100 justify-self-end"
+                }, React.createElement("div", {
+                      className: "inline-block group-hover:opacity-100 opacity-0 relative left-0 bottom-[-10%] z-10 text-6xl"
+                    }, React.createElement("i", {
+                          className: "light-icon-plus"
+                        })), React.createElement("div", {
+                      className: "inline-block group-hover:opacity-100 opacity-0 relative bottom-[-10%] left-[-10%] z-11 text-6xl"
+                    }, React.createElement("i", {
+                          className: "light-icon-shopping-cart"
+                        })), React.createElement("div", {
+                      className: "w-full inline-block group-hover:opacity-100 opacity-0 relative top-[2rem] z-11 text-lg"
+                    }, React.createElement("span", {
+                          className: "block w-full mx-auto"
+                        }, "Add to Cart"))));
 }
 
 var make = InventoryItem;

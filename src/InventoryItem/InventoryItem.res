@@ -9,8 +9,16 @@ let make = (~item: ExecutorHook.ExecutorConfig.InventoryItem.t, ~toggleSelection
       <h2 className="w-full text-align-center text-sm font-bold">{title |> str}</h2>
       <p className={(hideDescription ? "hidden " : "") ++ "text-xs m-4"}>{description |> str}</p>
     </div>
-    <div className="opacity-50 z-10 top-0 left-0 text-3xl font-bold absolute h-full w-full hover:bg-slate-100 hidden hover:block justify-self-end">
-      <i className="light-icon-plus relative top-[100%]"></i>
+    <div className="group hover:opacity-50 inset-0 z-10 top-0 left-0 font-bold absolute h-full w-full hover:bg-slate-100 justify-self-end">
+      <div className="inline-block group-hover:opacity-100 opacity-0 relative left-0 bottom-[-10%] z-10 text-6xl">
+        <i className="light-icon-plus"></i>
+      </div>
+      <div className="inline-block group-hover:opacity-100 opacity-0 relative bottom-[-10%] left-[-10%] z-11 text-6xl">
+        <i className="light-icon-shopping-cart"></i>
+      </div>
+      <div className="w-full inline-block group-hover:opacity-100 opacity-0 relative top-[2rem] z-11 text-lg">
+        <span className="block w-full mx-auto">{"Add to Cart" |> str}</span>
+      </div>
     </div>
   </button>
 }
