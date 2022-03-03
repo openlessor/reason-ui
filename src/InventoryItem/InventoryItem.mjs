@@ -16,7 +16,7 @@ function InventoryItem(Props) {
   var toggleSelection = Props.toggleSelection;
   var hideDescription = Props.hideDescription;
   return React.createElement("button", {
-              className: "transition-order hover:brightness-100 block bg-white p-4 rounded shadow m-1",
+              className: "relative hover:brightness-100 block bg-white p-4 rounded shadow m-1",
               onClick: (function (e) {
                   return Curry._2(toggleSelection, e, id);
                 })
@@ -31,7 +31,11 @@ function InventoryItem(Props) {
                   className: (
                     hideDescription ? "hidden " : ""
                   ) + "text-xs"
-                }, description));
+                }, description), React.createElement("div", {
+                  className: "opacity-50 z-10 top-0 left-0 text-3xl font-bold absolute h-full w-full hover:bg-slate-100 hidden hover:block"
+                }, React.createElement("i", {
+                      className: "light-icon-plus relative top-[100%]"
+                    })));
 }
 
 var make = InventoryItem;

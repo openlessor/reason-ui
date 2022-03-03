@@ -1,5 +1,7 @@
 let str = React.string
 
+let endpoint_url: string = "https://62210a40afd560ea69a5c07b.mockapi.io/mock"
+
 @react.component
 let make = (~dateA = ?, ~dateB = ?) => {
     let now = Js.Date.make()
@@ -18,8 +20,11 @@ let make = (~dateA = ?, ~dateB = ?) => {
         setCloseDate(openDate)
     }
 
-    Js.Console.log([now, today, openDate, closeDate])
-
+    let state: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
+    let result = switch state {
+        | ErrorLoadingEndpoint => <Error />
+        | LoadingEndpoint => <Loading />
+        | LoadedEndpoint(config) => 
     <div className="justify-center flex items-center">
         <div className="w-full rounded shadow-lg p-4">
             <div className="bg-zinc-100 rounded px-4 py-4">
@@ -29,22 +34,28 @@ let make = (~dateA = ?, ~dateB = ?) => {
                     </span>
                 {"Cloud Hardware Rental" |> str}
                 </div>
-                <p className="align-middle text-gray-700 text-base m-2 block">
+                <div className="align-middle text-gray-700 text-base m-2">
                     <span className="m-2 align-middle text-3xl font-light">
                         <i className="light-icon-calendar"></i>
                     </span> 
                     {"Select your reservation start date: " |> str}
-                </p>
+                </div>
                 <DatePicker minDate={today} onChange={updateDate} isOpen={false} className="m-2 ml-14 block" calendarClassName="bg-white" selected={openDate} />
-                <p className="block align-middle text-gray-700 text-base m-2">
+                <div className="align-middle text-gray-700 text-base m-2">
                     <span className="m-2 align-middle text-3xl font-light">
                         <i className="light-icon-file-invoice"></i>
                     </span>
                     {"Select your reservation type: " |> str}
                     <ReservationTypeSelection />
-                </p> 
-                <InventoryList openDate={openDate} closeDate={closeDate} />
+                </div> 
+                <InventoryList items={config.inventory} openDate={openDate} closeDate={closeDate} />
+                <div className="w-full">
+                    <button className="mx-auto mt-4 bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded">{"Book Reservation" |> str}</button>
+                </div>
             </div>
         </div>
     </div>
+    }
+    Js.Console.log(state)
+    result
 }

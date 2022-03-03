@@ -12,8 +12,6 @@ function str(prim) {
   return prim;
 }
 
-var mockItems = (require('./inventory.json'));
-
 var cmp = Caml_obj.caml_compare;
 
 var IntCmp = Belt_Id.MakeComparable({
@@ -23,6 +21,8 @@ var IntCmp = Belt_Id.MakeComparable({
 function InventoryList(Props) {
   var openDate = Props.openDate;
   var closeDate = Props.closeDate;
+  var items = Props.items;
+  console.log(items);
   var now = new Date();
   var today = new Date(now.setHours(0.0, 0.0, 0.0, 0.0));
   var heading = ReDate.isEqual(today, openDate) ? "Showing all equipment available today" : (
@@ -42,24 +42,24 @@ function InventoryList(Props) {
                   }
                 }));
   };
-  var unselectedItems = mockItems.filter(function (item) {
+  var unselectedItems = items.filter(function (item) {
           return !Belt_Set.has(selection, item.id);
         }).map(function (item) {
         return React.createElement(InventoryItem$ReasonUi.make, {
                     id: item.id,
-                    title: item.name,
+                    title: item.title,
                     description: item.description,
                     toggleSelection: toggleSelection,
                     hideDescription: false,
                     key: String(item.id)
                   });
       });
-  var selectedItems = mockItems.filter(function (item) {
+  var selectedItems = items.filter(function (item) {
           return Belt_Set.has(selection, item.id);
         }).map(function (item) {
         return React.createElement(InventoryItem$ReasonUi.make, {
                     id: item.id,
-                    title: item.name,
+                    title: item.title,
                     description: item.description,
                     toggleSelection: toggleSelection,
                     hideDescription: true,
@@ -79,22 +79,19 @@ function InventoryList(Props) {
                             })), "Available equipment", React.createElement("span", {
                           className: "m-4 text-gray-500 text-lg shadow-lg"
                         }, heading)), React.createElement("div", {
-                      className: "grid grid-cols-8 gap-4"
+                      className: "grid grid-cols-4 gap-4"
                     }, unselectedItems), React.createElement("h1", {
                       className: "block font-bold align-middle text-gray-700 text-base m-2 text-3xl"
                     }, React.createElement("span", {
                           className: "m-2 align-middle text-3xl font-light"
                         }, React.createElement("i", {
                               className: "light-icon-shopping-cart"
-                            })), "Selected equipment"), React.createElement("div", {
-                      className: "grid grid-cols-10 gap-2"
-                    }, selectedItems)));
+                            })), "Selected equipment (" + String(selectedItems.length) + ")")));
 }
 
 var make = InventoryList;
 
 exports.str = str;
-exports.mockItems = mockItems;
 exports.IntCmp = IntCmp;
 exports.make = make;
-/* mockItems Not a pure module */
+/* IntCmp Not a pure module */
