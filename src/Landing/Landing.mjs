@@ -2,9 +2,12 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var Caml_obj = require("rescript/lib/js/caml_obj.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Cart$ReasonUi = require("../Cart/Cart.mjs");
 var Error$ReasonUi = require("../Error/Error.mjs");
 var Loading$ReasonUi = require("../Loading/Loading.mjs");
-var DatePicker$ReasonUi = require("../DatePicker/DatePicker.mjs");
+var ReactDatepicker = require("react-datepicker").default;
 var ExecutorHook$ReasonUi = require("../ExecutorHook/ExecutorHook.mjs");
 var InventoryList$ReasonUi = require("../InventoryList/InventoryList.mjs");
 var ReservationTypeSelection$ReasonUi = require("../ReservationTypeSelection/ReservationTypeSelection.mjs");
@@ -14,6 +17,16 @@ function str(prim) {
 }
 
 var endpoint_url = "https://62210a40afd560ea69a5c07b.mockapi.io/mock";
+
+function addToCart(state, id) {
+  return Belt_Array.concat(state, [id]);
+}
+
+function removeFromCart(state, id) {
+  return state.filter(function (compareId) {
+              return Caml_obj.caml_notequal(compareId, id);
+            });
+}
 
 function Landing(Props) {
   var dateA = Props.dateA;
@@ -41,10 +54,28 @@ function Landing(Props) {
     Curry._1(setOpenDate, openDate);
     return Curry._1(setCloseDate, openDate);
   };
-  var state = ExecutorHook$ReasonUi.useExecutor(endpoint_url);
-  var result = typeof state === "number" ? (
-      state !== 0 ? React.createElement(Loading$ReasonUi.make, {}) : React.createElement(Error$ReasonUi.make, {})
-    ) : React.createElement("div", {
+  var match$2 = React.useReducer((function (state, action) {
+          console.log("calling reducer");
+          console.log({
+                state: state,
+                action: action
+              });
+          var result;
+          result = action.TAG === /* AddToCart */0 ? Belt_Array.concat(state, [action.id]) : removeFromCart(state, action.id);
+          console.log({
+                nextState: result
+              });
+          return result;
+        }), []);
+  var state = match$2[0];
+  var cartCount = state.length;
+  var configState = ExecutorHook$ReasonUi.useExecutor(endpoint_url);
+  var result;
+  if (typeof configState === "number") {
+    result = configState !== 0 ? React.createElement(Loading$ReasonUi.make, {}) : React.createElement(Error$ReasonUi.make, {});
+  } else {
+    var configState$1 = configState._0;
+    result = React.createElement("div", {
           className: "justify-center flex items-center"
         }, React.createElement("div", {
               className: "w-full rounded shadow-lg p-4"
@@ -62,12 +93,12 @@ function Landing(Props) {
                           className: "m-2 align-middle text-3xl font-light"
                         }, React.createElement("i", {
                               className: "light-icon-calendar"
-                            })), "Select your reservation start date: "), React.createElement(DatePicker$ReasonUi.make, {
+                            })), "Select your reservation start date: "), React.createElement(ReactDatepicker, {
+                      calendarClassName: "bg-white",
+                      className: "m-2 ml-14 block",
+                      isOpen: false,
                       minDate: today,
                       onChange: updateDate,
-                      isOpen: false,
-                      className: "m-2 ml-14 block",
-                      calendarClassName: "bg-white",
                       selected: openDate
                     }), React.createElement("div", {
                       className: "align-middle text-gray-700 text-base m-2"
@@ -75,16 +106,26 @@ function Landing(Props) {
                           className: "m-2 align-middle text-3xl font-light"
                         }, React.createElement("i", {
                               className: "light-icon-file-invoice"
-                            })), "Select your reservation type: ", React.createElement(ReservationTypeSelection$ReasonUi.make, {})), React.createElement(InventoryList$ReasonUi.make, {
-                      openDate: openDate,
-                      closeDate: match$1[0],
-                      items: state._0.inventory
+                            })), "Select your reservation type: ", React.createElement(ReservationTypeSelection$ReasonUi.make, {})), React.createElement(Cart$ReasonUi.StateContext.Provider.make, {
+                      children: React.createElement(Cart$ReasonUi.DispatchContext.Provider.make, {
+                            children: null,
+                            value: match$2[1]
+                          }, React.createElement(InventoryList$ReasonUi.make, {
+                                openDate: openDate,
+                                closeDate: match$1[0],
+                                items: configState$1.inventory
+                              }), React.createElement(Cart$ReasonUi.make, {
+                                items: configState$1.inventory,
+                                count: cartCount
+                              })),
+                      value: state
                     }), React.createElement("div", {
                       className: "w-full"
                     }, React.createElement("button", {
                           className: "mx-auto mt-4 bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded"
                         }, "Book Reservation")))));
-  console.log(state);
+  }
+  console.log(configState);
   return result;
 }
 
@@ -92,5 +133,7 @@ var make = Landing;
 
 exports.str = str;
 exports.endpoint_url = endpoint_url;
+exports.addToCart = addToCart;
+exports.removeFromCart = removeFromCart;
 exports.make = make;
 /* react Not a pure module */

@@ -2,6 +2,16 @@ let str = React.string
 
 let endpoint_url: string = "https://62210a40afd560ea69a5c07b.mockapi.io/mock"
 
+let addToCart = (state, id) => {
+  Belt.Array.concat(state, [id])
+}
+
+let removeFromCart = (state, id) => {
+  Js.Array.filter((compareId) => {
+    compareId != id
+  }, state)
+}
+
 @react.component
 let make = (~dateA = ?, ~dateB = ?) => {
     let now = Js.Date.make()
@@ -20,11 +30,23 @@ let make = (~dateA = ?, ~dateB = ?) => {
         setCloseDate(openDate)
     }
 
-    let state: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
-    let result = switch state {
+    let (state, dispatch) = React.useReducer((state, action) => {
+        Js.Console.log("calling reducer")
+        Js.Console.log({ "state": state, "action": action })
+        let result = switch action {
+        | Cart.DispatchContext.AddToCart({ id }) => addToCart(state, id)
+        | Cart.DispatchContext.RemoveFromCart({ id }) => removeFromCart(state, id)
+        }
+        Js.Console.log({"nextState": result })
+        result
+    }, [])
+    let cartCount = Belt.Array.length(state)
+
+    let configState: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
+    let result = switch configState {
         | ErrorLoadingEndpoint => <Error />
         | LoadingEndpoint => <Loading />
-        | LoadedEndpoint(config) => 
+        | LoadedEndpoint(configState) => 
     <div className="justify-center flex items-center">
         <div className="w-full rounded shadow-lg p-4">
             <div className="bg-zinc-100 rounded px-4 py-4">
@@ -47,8 +69,13 @@ let make = (~dateA = ?, ~dateB = ?) => {
                     </span>
                     {"Select your reservation type: " |> str}
                     <ReservationTypeSelection />
-                </div> 
-                <InventoryList items={config.inventory} openDate={openDate} closeDate={closeDate} />
+                </div>
+                <Cart.StateContext.Provider value={state}>
+                    <Cart.DispatchContext.Provider value={dispatch}>
+                        <InventoryList items={configState.inventory} openDate={openDate} closeDate={closeDate} />
+                        <Cart count={cartCount} items={configState.inventory} />
+                    </Cart.DispatchContext.Provider>
+                </Cart.StateContext.Provider>
                 <div className="w-full">
                     <button className="mx-auto mt-4 bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded">{"Book Reservation" |> str}</button>
                 </div>
@@ -56,6 +83,6 @@ let make = (~dateA = ?, ~dateB = ?) => {
         </div>
     </div>
     }
-    Js.Console.log(state)
+    Js.Console.log(configState)
     result
 }

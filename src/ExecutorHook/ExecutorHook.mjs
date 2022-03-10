@@ -5,9 +5,7 @@ var React = require("react");
 
 var InventoryItem = {};
 
-var ExecutorConfig = {
-  InventoryItem: InventoryItem
-};
+var ExecutorConfig = {};
 
 function useExecutor(url) {
   var match = React.useState(function () {
@@ -38,6 +36,7 @@ function useExecutor(url) {
   return match[0];
 }
 
+exports.InventoryItem = InventoryItem;
 exports.ExecutorConfig = ExecutorConfig;
 exports.useExecutor = useExecutor;
 /* react Not a pure module */

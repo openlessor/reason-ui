@@ -2,6 +2,7 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var Cart$ReasonUi = require("../Cart/Cart.mjs");
 
 function str(prim) {
   return prim;
@@ -9,21 +10,26 @@ function str(prim) {
 
 function InventoryItem(Props) {
   var item = Props.item;
-  var toggleSelection = Props.toggleSelection;
   var hideDescription = Props.hideDescription;
   var id = item.id;
+  var dispatch = React.useContext(Cart$ReasonUi.DispatchContext.context);
   return React.createElement("button", {
               className: "relative m-4 flex flex-col hover:brightness-100 block bg-white rounded shadow m-1",
-              onClick: (function (e) {
-                  return Curry._2(toggleSelection, e, id);
+              onClick: (function (_e) {
+                  return Curry._1(dispatch, {
+                              TAG: /* AddToCart */0,
+                              id: id
+                            });
                 })
-            }, React.createElement("img", {
-                  className: "p-4",
-                  style: {
-                    width: "100%"
-                  },
-                  src: item.image
-                }), React.createElement("div", {
+            }, React.createElement("div", {
+                  className: "rounded shadow m-0 p-0"
+                }, React.createElement("img", {
+                      className: "p-4",
+                      style: {
+                        width: "100%"
+                      },
+                      src: item.image + "?" + String(id)
+                    })), React.createElement("div", {
                   className: "flex flex-col"
                 }, React.createElement("h2", {
                       className: "w-full text-align-center text-sm font-bold"
