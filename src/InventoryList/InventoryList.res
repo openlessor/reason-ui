@@ -7,10 +7,7 @@ module IntCmp =
   })
 
 @react.component
-let make = (~openDate, ~closeDate, ~items: array<ExecutorHook.InventoryItem.t>) => {
-  let dispatch = React.useContext(Cart.DispatchContext.context)
-  let cartState = React.useContext(Cart.StateContext.context)
-
+let make = (~openDate, ~closeDate, ~activeId, ~items: array<ExecutorHook.InventoryItem.t>) => {
   let filterType = "all"
   let now = Js.Date.make()
   let today = Js.Date.fromFloat(
@@ -28,50 +25,23 @@ let make = (~openDate, ~closeDate, ~items: array<ExecutorHook.InventoryItem.t>) 
       "Showing " ++ filterType ++ " equipment available from " ++ Js.Date.toLocaleDateString(openDate) ++ " to " ++ Js.Date.toLocaleDateString(closeDate)
     }
   }
-  
-  //let (selection, setSelection) = React.useState(_ => Belt.Set.make(~id=module(IntCmp)))
-  let toggleSelection = (_e, id) => {
-    //setSelection(_prev => {
-      // if Belt.Set.has(selection, id) {
-      //  dispatch(RemoveFromCart({ id: id }))
-      //  Belt.Set.remove(selection, id)
-      //} else {
-        dispatch(AddToCart({ id: id }))
-      //  Belt.Set.fromArray(cartState, ~id=module(IntCmp))
-      //}
-    //})
-  }
-  //let toggleSelection = (_e, id) => {
-    //setSelection(_prev => {
-    //if Belt.Set.has(selection, id) {
-    //  Belt.Set.remove(selection, id)
-    //} else {
-      // dispatch Cart.addToCart(cartState, id)
-      // Belt.Set.fromArray(Belt.Array.map(cartState.items, (item) => item.id), ~id=module(IntCmp))
-    //}
-    // })
-  //}
- 
-  <div className="bg-slate-200 w-[100%] rounded p-1">
-    <div className="m-4 px-1 py-1">
-      <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">
-        <span className="m-2 align-middle text-3xl font-light">
-          <i className="light-icon-search" />
-        </span>
-        {"Available equipment" |> str}
-        <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
-      </h1>
-      <div className="place-content-start grid grid-cols-4 gap-4">
-        {Js.Array.map((item: ExecutorHook.InventoryItem.t) =>
-          <InventoryItem
-              key={Belt.Int.toString(item.id)}
-              item={item}
-              hideDescription={false}
-            />,
-           Js.Array.filter((item: ExecutorHook.InventoryItem.t) =>
-             Js.Array.find((id) => item.id == id, cartState) === None
-           , items)) |> React.array}
-      </div>
+
+  <div className="m-4 px-1 py-1">
+    <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">
+      <span className="m-2 align-middle text-3xl font-light">
+        <i className="light-icon-search" />
+      </span>
+      {"Available equipment" |> str}
+      <span className="m-4 text-gray-500 text-lg shadow-lg">{heading |> str}</span>
+    </h1>
+    <div className="place-content-start grid lg:grid-cols-8 grid-cols-4 gap-4">
+      {Js.Array.map((item: ExecutorHook.InventoryItem.t) =>
+        <InventoryItem
+          key={Belt.Int.toString(item.id)}
+          item={item}
+          active={item.id == activeId}
+        />,
+        items) |> React.array}
     </div>
   </div>
 }

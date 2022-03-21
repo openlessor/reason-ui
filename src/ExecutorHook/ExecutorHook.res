@@ -3,7 +3,8 @@ module InventoryItem = {
       id: int,
       description: string,
       image: string,
-      title: string
+      title: string,
+      quantity: int
   }
 }
 

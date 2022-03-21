@@ -35,7 +35,15 @@ var DispatchContext = {
   Provider: Provider
 };
 
-var state = [];
+var state_cart = [];
+
+var state_items = [];
+
+var state = {
+  cart: state_cart,
+  selected_item: undefined,
+  items: state_items
+};
 
 var context$1 = React.createContext(state);
 

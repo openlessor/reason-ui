@@ -2,18 +2,18 @@ let str = React.string
 
 let endpoint_url: string = "https://62210a40afd560ea69a5c07b.mockapi.io/mock"
 
-let addToCart = (state, id) => {
-  Belt.Array.concat(state, [id])
+let addToCart = (state: Cart.t, id) => {
+  { ...state, cart: Belt.Array.concat(state.cart, [id]) }
 }
 
-let removeFromCart = (state, id) => {
-  Js.Array.filter((compareId) => {
+let removeFromCart = (state: Cart.t, id) => {
+  { ...state, cart: Js.Array.filter((compareId) => {
     compareId != id
-  }, state)
+  }, state.cart) }
 }
 
 @react.component
-let make = (~dateA = ?, ~dateB = ?) => {
+let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
     let now = Js.Date.make()
     let today = Js.Date.fromFloat(Js.Date.setHoursMSMs(now, ~hours=0.0, ~minutes=0.0, ~seconds=0.0, ~milliseconds=0.0, ()))
 
@@ -39,8 +39,8 @@ let make = (~dateA = ?, ~dateB = ?) => {
         }
         Js.Console.log({"nextState": result })
         result
-    }, [])
-    let cartCount = Belt.Array.length(state)
+    }, { items: [], selected_item: None, cart: [] })
+    let cartCount = Belt.Array.length(state.cart)
 
     let configState: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
     let result = switch configState {
@@ -72,7 +72,7 @@ let make = (~dateA = ?, ~dateB = ?) => {
                 </div>
                 <Cart.StateContext.Provider value={state}>
                     <Cart.DispatchContext.Provider value={dispatch}>
-                        <InventoryList items={configState.inventory} openDate={openDate} closeDate={closeDate} />
+                        <InventoryList activeId={activeId} items={configState.inventory} openDate={openDate} closeDate={closeDate} />
                         <Cart count={cartCount} items={configState.inventory} />
                     </Cart.DispatchContext.Provider>
                 </Cart.StateContext.Provider>

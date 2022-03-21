@@ -1,6 +1,6 @@
 let str = React.string
 
-type rec t = array<int>
+type rec t = {cart: array<int>, selected_item: option<int>, items: array<ExecutorHook.InventoryItem.t>}
 
 let itemCount = (state) => {
   Belt.Array.length(state)
@@ -22,14 +22,14 @@ module DispatchContext = {
 }
 
 module StateContext = {
-  let state: t = []
+  let state: t = {cart: [], selected_item: None, items: []}
   let context = React.createContext(state)
 
   module Provider = {
     let provider = React.Context.provider(context)
 
     @react.component
-    let make = (~children, ~value: array<int>) => {
+    let make = (~children, ~value: t) => {
         React.createElement(provider, {"children": children, "value": value})
     } 
   }

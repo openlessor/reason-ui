@@ -2,7 +2,6 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
-var Caml_obj = require("rescript/lib/js/caml_obj.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Cart$ReasonUi = require("../Cart/Cart.mjs");
 var Error$ReasonUi = require("../Error/Error.mjs");
@@ -19,18 +18,28 @@ function str(prim) {
 var endpoint_url = "https://62210a40afd560ea69a5c07b.mockapi.io/mock";
 
 function addToCart(state, id) {
-  return Belt_Array.concat(state, [id]);
+  return {
+          cart: Belt_Array.concat(state.cart, [id]),
+          selected_item: state.selected_item,
+          items: state.items
+        };
 }
 
 function removeFromCart(state, id) {
-  return state.filter(function (compareId) {
-              return Caml_obj.caml_notequal(compareId, id);
-            });
+  return {
+          cart: state.cart.filter(function (compareId) {
+                return compareId !== id;
+              }),
+          selected_item: state.selected_item,
+          items: state.items
+        };
 }
 
 function Landing(Props) {
   var dateA = Props.dateA;
   var dateB = Props.dateB;
+  var activeIdOpt = Props.activeId;
+  var activeId = activeIdOpt !== undefined ? activeIdOpt : -1;
   var now = new Date();
   var today = new Date(now.setHours(0.0, 0.0, 0.0, 0.0));
   var match = React.useState(function () {
@@ -61,14 +70,18 @@ function Landing(Props) {
                 action: action
               });
           var result;
-          result = action.TAG === /* AddToCart */0 ? Belt_Array.concat(state, [action.id]) : removeFromCart(state, action.id);
+          result = action.TAG === /* AddToCart */0 ? addToCart(state, action.id) : removeFromCart(state, action.id);
           console.log({
                 nextState: result
               });
           return result;
-        }), []);
+        }), {
+        cart: [],
+        selected_item: undefined,
+        items: []
+      });
   var state = match$2[0];
-  var cartCount = state.length;
+  var cartCount = state.cart.length;
   var configState = ExecutorHook$ReasonUi.useExecutor(endpoint_url);
   var result;
   if (typeof configState === "number") {
@@ -113,6 +126,7 @@ function Landing(Props) {
                           }, React.createElement(InventoryList$ReasonUi.make, {
                                 openDate: openDate,
                                 closeDate: match$1[0],
+                                activeId: activeId,
                                 items: configState$1.inventory
                               }), React.createElement(Cart$ReasonUi.make, {
                                 items: configState$1.inventory,
