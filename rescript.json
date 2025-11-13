@@ -17,5 +17,5 @@
     "@rescript/react"
   ],
   "bs-dev-dependencies": [],
-  "bsc-flags": []
+  "bsc-flags": ["-open RescriptCore"]
 }

@@ -1,6 +1,6 @@
 // Entry point
-%%raw(`require("./tailwind.css")`)
-%%raw(`require("react-datepicker/dist/react-datepicker.css")`)
+%%raw(`import "./tailwind.css"`)
+%%raw(`import "react-datepicker/dist/react-datepicker.css"`)
 
 open ReactDOM.Client
 

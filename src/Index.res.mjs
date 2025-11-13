@@ -5,10 +5,10 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Client from "react-dom/client";
 import * as JsxRuntime from "react/jsx-runtime";
 
-require("./tailwind.css")
+import "./tailwind.css"
 ;
 
-require("react-datepicker/dist/react-datepicker.css")
+import "react-datepicker/dist/react-datepicker.css"
 ;
 
 var rootElement = document.querySelector("#root");
