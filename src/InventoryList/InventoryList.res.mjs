@@ -3,7 +3,7 @@
 import * as Belt_Id from "rescript/lib/es6/belt_Id.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Js_array from "rescript/lib/es6/js_array.js";
-import * as InventoryItem from "../InventoryItem/InventoryItem.mjs";
+import * as InventoryItem from "../InventoryItem/InventoryItem.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function str(prim) {
