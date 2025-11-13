@@ -15,9 +15,9 @@ let make = (~openDate, ~closeDate, ~activeId, ~items: array<ExecutorHook.Invento
   )
 
   let heading = {
-    if today->ReDate.isEqual(openDate) {
+    if Js.Date.getTime(today) == Js.Date.getTime(openDate) {
       "Showing " ++ filterType ++ " equipment available today"
-    } else if openDate->ReDate.differenceInDays(closeDate) == 0.0 {
+    } else if Js.Date.getTime(openDate) == Js.Date.getTime(closeDate) {
       // There is no close date selected and the reservation date is not today
       "Showing " ++ filterType ++ " equipment available on " ++ Js.Date.toLocaleDateString(openDate)
     } else {

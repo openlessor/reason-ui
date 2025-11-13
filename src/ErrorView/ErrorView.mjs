@@ -6,13 +6,13 @@ function str(prim) {
   return prim;
 }
 
-function $$Error(props) {
+function ErrorView(props) {
   return JsxRuntime.jsx("h1", {
               children: "Error"
             });
 }
 
-var make = $$Error;
+var make = ErrorView;
 
 export {
   str ,

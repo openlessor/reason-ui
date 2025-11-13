@@ -1,9 +1,14 @@
 // Entry point
 %%raw(`require("./tailwind.css")`)
-%%raw(`require("light-icons/dist/light-icon.css")`)
 %%raw(`require("react-datepicker/dist/react-datepicker.css")`)
 
-switch (ReactDOM.querySelector("#root")) {
-  | Some(root) => ReactDOM.render(<App />, root)
-  | None => ()
+open ReactDOM.Client
+
+let rootElement = ReactDOM.querySelector("#root")
+
+switch rootElement {
+| Some(domNode) =>
+  let root = createRoot(domNode)
+  Root.render(root, <App />)
+| None => Js.log("No root element found")
 }

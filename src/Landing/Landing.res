@@ -44,8 +44,8 @@ let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
 
     let configState: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
     let result = switch configState {
-        | ErrorLoadingEndpoint => <Error />
-        | LoadingEndpoint => <Loading />
+        | ErrorLoadingEndpoint => React.createElement(ErrorView.make, {})
+        | LoadingEndpoint => React.createElement(Loading.make, {})
         | LoadedEndpoint(configState) => 
     <div className="justify-center flex items-center">
         <div className="w-full rounded shadow-lg p-4">

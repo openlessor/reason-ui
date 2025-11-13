@@ -12,6 +12,6 @@ let make = () => {
             <Landing activeId={id} />
         }
         | list{} => <Landing />
-        | _ => <Error />
+        | _ => <ErrorView />
     }
   }

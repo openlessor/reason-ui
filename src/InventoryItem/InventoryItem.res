@@ -2,7 +2,8 @@ let str = React.string
 
 @react.component
 let make = (~item: ExecutorHook.InventoryItem.t, ~active = false) => {
-  let { id, title, description, image } = item
+  let { id, title, description } = item
+  let image = "https://placeholdr.ai/1ca27004-f6f9-413a-8dbf-6c088feabead/256/256";
   let dispatch = React.useContext(Cart.DispatchContext.context)
   let cartState = React.useContext(Cart.StateContext.context)
   let matches = Js.Array.filter((cart_item) => cart_item == item.id, cartState.cart)
@@ -12,7 +13,7 @@ let make = (~item: ExecutorHook.InventoryItem.t, ~active = false) => {
   <a id={"item-" ++ Belt.Int.toString(id)} href={"/item/" ++  Belt.Int.toString(id)} onClick={(_e) => RescriptReactRouter.push("item/" ++  Belt.Int.toString(id))} className="active:col-span-4 target:col-span-4 lg:active:col-span-8 lg:target:col-span-8 block">
     <button className="relative m-[1.5] flex flex-col block">
       <div className="rounded border-2 shadow m-0 p-0">
-        <img className="p-[1.5]" src={image ++ "?" ++ Belt.Int.toString(id)} style={ReactDOM.Style.make(~width="100%", ())} />
+        <img className="p-[1.5]" src={image ++ "?" ++ Belt.Int.toString(id)} style={Obj.magic({"width": "100%"})} />
       </div>
       <div className="flex flex-row justify-between w-full bg-gray-300 text-white shadow">
         <span className="drop-shadow"><i className="light-icon-shopping-cart text-xl"></i> <span className="text-[0.5rem]" title="Quantity in cart">{{ quantity |> str }}</span></span>

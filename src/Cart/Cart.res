@@ -16,7 +16,8 @@ module DispatchContext = {
 
     @react.component
     let make = (~children, ~value) => {
-        React.createElement(provider, {"children": children, "value": value})
+        let element: React.element = React.createElement(provider, {value: value, children: children})
+        element
     } 
   }
 }
@@ -30,7 +31,8 @@ module StateContext = {
 
     @react.component
     let make = (~children, ~value: t) => {
-        React.createElement(provider, {"children": children, "value": value})
+        let element: React.element = React.createElement(provider, {value: value, children: children})
+        element
     } 
   }
 }
@@ -57,19 +59,13 @@ let make = (~items, ~count) => {
     let cartState = React.useContext(StateContext.context)
     let dispatch = React.useContext(DispatchContext.context)
     Js.Console.log({"CartState": cartState})
-    // let (count, setCount) = React.useState(() => Belt.Array.length(cartState))
-    // React.useEffect(() => {
-    //   Js.Console.log("count: " ++ Belt.Int.toString(Belt.Array.length(cartState)))
-    //  setCount(_int => Belt.Array.length(cartState))
-    //  None
-    // })
-
+    
     <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">
       <span className="m-2 align-middle text-3xl font-light">
           <i className="light-icon-shopping-cart"></i>
       </span>
-      {"Selected equipment (" |> str}
-      {Belt.Int.toString(count) |> str}
-      {")" |> str}
+      {str("Selected equipment (")}
+      {str(Belt.Int.toString(count))}
+      {str(")")}
     </h1>
 }
