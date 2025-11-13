@@ -17,7 +17,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@davesnx/styled-ppx": "^0.25.0",
     "@rescript/core": "^1.6.1",
     "@rescript/react": "^0.14.0",
     "react": "^19.2.0",
