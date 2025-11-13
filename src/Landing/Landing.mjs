@@ -148,7 +148,7 @@ function Landing(props) {
                                             items: configState$1.inventory
                                           }),
                                       JsxRuntime.jsx(Cart.make, {
-                                            items: configState$1.inventory,
+                                            _items: configState$1.inventory,
                                             count: cartCount
                                           })
                                     ],

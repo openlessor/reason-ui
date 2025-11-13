@@ -55,9 +55,9 @@ let make = (~initialCount: int) => {
 */
 
 @react.component
-let make = (~items, ~count) => {
+let make = (~_items, ~count) => {
     let cartState = React.useContext(StateContext.context)
-    let dispatch = React.useContext(DispatchContext.context)
+    let _dispatch = React.useContext(DispatchContext.context)
     Js.Console.log({"CartState": cartState})
     
     <h1 className="block font-bold align-middle text-gray-700 text-base m-2 text-3xl">

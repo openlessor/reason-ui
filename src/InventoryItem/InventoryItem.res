@@ -4,7 +4,7 @@ let str = React.string
 let make = (~item: ExecutorHook.InventoryItem.t, ~active = false) => {
   let { id, title, description } = item
   let image = "https://placeholdr.ai/1ca27004-f6f9-413a-8dbf-6c088feabead/256/256";
-  let dispatch = React.useContext(Cart.DispatchContext.context)
+  let _dispatch = React.useContext(Cart.DispatchContext.context)
   let cartState = React.useContext(Cart.StateContext.context)
   let matches = Js.Array.filter((cart_item) => cart_item == item.id, cartState.cart)
   let matchCount = Js.Array.length(matches)

@@ -73,7 +73,7 @@ let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
                 <Cart.StateContext.Provider value={state}>
                     <Cart.DispatchContext.Provider value={dispatch}>
                         <InventoryList activeId={activeId} items={configState.inventory} openDate={openDate} closeDate={closeDate} />
-                        <Cart count={cartCount} items={configState.inventory} />
+                        <Cart count={cartCount} _items={configState.inventory} />
                     </Cart.DispatchContext.Provider>
                 </Cart.StateContext.Provider>
                 <div className="w-full">
