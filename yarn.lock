@@ -412,6 +412,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fattafatta/rescript-jotai@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "@fattafatta/rescript-jotai@npm:0.4.4"
+  peerDependencies:
+    "@rescript/react": ">=0.12.0"
+    jotai: ">=2.0.3"
+    react: ">=18.0.0"
+  checksum: 10c0/5887c856dd245879cd8f6302257188fdfaff3946f60bbc6818809a6fe2b1d28daac1452b9246df5c7e99c60485543c734b102d45a3a7afcafa0c9285307c5cf1
+  languageName: node
+  linkType: hard
+
+"@glennsl/rescript-fetch@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@glennsl/rescript-fetch@npm:0.2.3"
+  checksum: 10c0/5f3049bf8775ae69a82d3b7f22d2824e681908282d5cd4c2a8ff395f3bbbe2e725effb95e16603c36c100f59d68dfc160bc33dc4d1fe23863e3c7046861e59a2
+  languageName: node
+  linkType: hard
+
 "@isaacs/balanced-match@npm:^4.0.1":
   version: 4.0.1
   resolution: "@isaacs/balanced-match@npm:4.0.1"
@@ -1687,6 +1705,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.15.1":
+  version: 2.15.1
+  resolution: "jotai@npm:2.15.1"
+  peerDependencies:
+    "@babel/core": ">=7.0.0"
+    "@babel/template": ">=7.0.0"
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@babel/template":
+      optional: true
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/8260ac9f36e14d2cedbc79f63bc1bcd82902d68a1ab1f3dfce6ffabccbedfd5fa54fffe93e53a09253d6b29a9c05fbc455108a280efc8d349fd5bfb965f7869b
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -2423,11 +2462,14 @@ __metadata:
   resolution: "reason-ui@workspace:."
   dependencies:
     "@faker-js/faker": "npm:^6.0.0-alpha.7"
+    "@fattafatta/rescript-jotai": "npm:^0.4.4"
+    "@glennsl/rescript-fetch": "npm:^0.2.3"
     "@jihchi/vite-plugin-rescript": "npm:^7.1.0"
     "@rescript/core": "npm:^1.6.1"
     "@rescript/react": "npm:^0.14.0"
     "@vitejs/plugin-react": "npm:^5.1.1"
     autoprefixer: "npm:^10.3.7"
+    jotai: "npm:^2.15.1"
     postcss: "npm:^8.3.9"
     postcss-modules: "npm:^4.3.0"
     react: "npm:^19.2.0"

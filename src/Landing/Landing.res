@@ -1,7 +1,5 @@
 let str = React.string
 
-let endpoint_url: string = "https://62210a40afd560ea69a5c07b.mockapi.io/mock"
-
 let addToCart = (state: Cart.t, id) => {
   { ...state, cart: Belt.Array.concat(state.cart, [id]) }
 }
@@ -13,7 +11,11 @@ let removeFromCart = (state: Cart.t, id) => {
 }
 
 @react.component
-let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
+let make = (~dateA = ?, ~dateB = ?, ~activeIdOpt: option<string> = ?) => {
+    let activeId = switch activeIdOpt {
+        | Some(id) => id
+        | None => ""
+    }
     let now = Js.Date.make()
     let today = Js.Date.fromFloat(Js.Date.setHoursMSMs(now, ~hours=0.0, ~minutes=0.0, ~seconds=0.0, ~milliseconds=0.0, ()))
 
@@ -42,12 +44,10 @@ let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
     }, { items: [], selected_item: None, cart: [] })
     let cartCount = Belt.Array.length(state.cart)
 
-    let configState: ExecutorHook.state = ExecutorHook.useExecutor(endpoint_url)
-    let result = switch configState {
-        | ErrorLoadingEndpoint => React.createElement(ErrorView.make, {})
-        | LoadingEndpoint => React.createElement(Loading.make, {})
-        | LoadedEndpoint(configState) => 
-    <div className="justify-center flex items-center">
+    let configState: ExecutorHook.ExecutorConfig.t = ExecutorHook.useExecutor()
+    Js.Console.log({"ConfigState": configState})
+
+    ( <div className="justify-center flex items-center">
         <div className="w-full rounded shadow-lg p-4">
             <div className="bg-zinc-100 rounded px-4 py-4">
                 <div className="align-middle font-bold text-3xl m-2 text-zinc-700">
@@ -81,8 +81,5 @@ let make = (~dateA = ?, ~dateB = ?, ~activeId = -1) => {
                 </div>
             </div>
         </div>
-    </div>
-    }
-    Js.Console.log(configState)
-    result
+    </div> )
 }

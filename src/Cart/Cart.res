@@ -37,23 +37,6 @@ module StateContext = {
   }
 }
 
-/**
-@react.component
-let make = (~initialCount: int) => {
-  let (state, dispatch) = React.useReducerWithMapState(
-    reducer,
-    initialCount,
-    init,
-  )
-
-  <>
-    {React.string("Count:" ++ Belt.Int.toString(state.count))}
-    <button onClick={_ => dispatch(Dec)}> {React.string("-")} </button>
-    <button onClick={_ => dispatch(Inc)}> {React.string("+")} </button>
-  </>
-}
-*/
-
 @react.component
 let make = (~_items, ~count) => {
     let cartState = React.useContext(StateContext.context)

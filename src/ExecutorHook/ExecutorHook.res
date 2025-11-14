@@ -6,45 +6,31 @@ module InventoryItem = {
       title: string,
       quantity: int
   }
+
+    @scope("JSON") @val
+    external _parseJSON: string => t = "parse"
 }
 
 module ExecutorConfig = {
     type t = {
         inventory: array<InventoryItem.t>
     }
+
+    @scope("JSON") @val
+    external parseJSON: string => t = "parse"
 }
 
-type request
-type response
-@new external makeXMLHttpRequest: unit => request = "XMLHttpRequest"
-@send external addEventListener: (request, string, unit => unit) => unit = "addEventListener"
-@val @scope("JSON") external parseResponse: response => ExecutorConfig.t = "parse"
-@get external response: request => response = "response"
-@send external open_: (request, string, string) => unit = "open"
-@send external send: request => unit = "send"
-@send external abort: request => unit = "abort"
+let endpoint_url: string = "https://62210a40afd560ea69a5c07b.mockapi.io/mock"
+
+let executorConfigAtom = Jotai.Atom.makeAsync(async () => {
+  open Fetch
+  let response = await fetch(endpoint_url, { method: #GET })
+  (ExecutorConfig.parseJSON(await response->Response.text), undefined)
+})
 
 type state = ErrorLoadingEndpoint | LoadingEndpoint | LoadedEndpoint(ExecutorConfig.t)
 
-let useExecutor = (url: string): state => {
-  let (state, setState) = React.useState(_ => LoadingEndpoint)
-
-  React.useEffect0(() => {
-    let request = makeXMLHttpRequest()
-    request->addEventListener("load", () => {
-      setState(_previousState => LoadedEndpoint((request->response->parseResponse)))
-    })
-    request->addEventListener("error", () => {
-      setState(_previousState => ErrorLoadingEndpoint)
-    })
-    request->open_("GET", url)
-    request->send
-
-    // the return value is called by React's useEffect when the component unmounts
-    Some(() => {
-      request->abort
-    })
-  })
-
-  state
+let useExecutor = (): ExecutorConfig.t => {
+  let (executorConfig, _) = Jotai.Atom.useAtomValueAsync(executorConfigAtom)
+  executorConfig
 }

@@ -2,9 +2,7 @@
 
 import * as Cart from "../Cart/Cart.res.mjs";
 import * as React from "react";
-import * as Loading from "../Loading/Loading.res.mjs";
 import * as Js_array from "rescript/lib/es6/js_array.js";
-import * as ErrorView from "../ErrorView/ErrorView.res.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as ExecutorHook from "../ExecutorHook/ExecutorHook.res.mjs";
 import * as InventoryList from "../InventoryList/InventoryList.res.mjs";
@@ -15,8 +13,6 @@ import * as ReservationTypeSelection from "../ReservationTypeSelection/Reservati
 function str(prim) {
   return prim;
 }
-
-var endpoint_url = "https://62210a40afd560ea69a5c07b.mockapi.io/mock";
 
 function addToCart(state, id) {
   return {
@@ -37,10 +33,10 @@ function removeFromCart(state, id) {
 }
 
 function Landing(props) {
-  var __activeId = props.activeId;
+  var activeIdOpt = props.activeIdOpt;
   var dateB = props.dateB;
   var dateA = props.dateA;
-  var activeId = __activeId !== undefined ? __activeId : -1;
+  var activeId = activeIdOpt !== undefined ? activeIdOpt : "";
   var now = new Date();
   var today = new Date(now.setHours(0.0, 0.0, 0.0, 0.0));
   var match = React.useState(function () {
@@ -83,103 +79,97 @@ function Landing(props) {
       });
   var state = match$2[0];
   var cartCount = state.cart.length;
-  var configState = ExecutorHook.useExecutor(endpoint_url);
-  var result;
-  if (typeof configState !== "object") {
-    result = configState === "ErrorLoadingEndpoint" ? React.createElement(ErrorView.make, {}) : React.createElement(Loading.make, {});
-  } else {
-    var configState$1 = configState._0;
-    result = JsxRuntime.jsx("div", {
-          children: JsxRuntime.jsx("div", {
-                children: JsxRuntime.jsxs("div", {
-                      children: [
-                        JsxRuntime.jsxs("div", {
-                              children: [
-                                JsxRuntime.jsx("span", {
-                                      children: JsxRuntime.jsx("i", {
-                                            className: "light-icon-cloud"
-                                          }),
-                                      className: "m-2 align-middle text-3xl font-light"
-                                    }),
-                                "Cloud Hardware Rental"
-                              ],
-                              className: "align-middle font-bold text-3xl m-2 text-zinc-700"
-                            }),
-                        JsxRuntime.jsxs("div", {
-                              children: [
-                                JsxRuntime.jsx("span", {
-                                      children: JsxRuntime.jsx("i", {
-                                            className: "light-icon-calendar"
-                                          }),
-                                      className: "m-2 align-middle text-3xl font-light"
-                                    }),
-                                "Select your reservation start date: "
-                              ],
-                              className: "align-middle text-gray-700 text-base m-2"
-                            }),
-                        JsxRuntime.jsx(ReactDatepicker, {
-                              calendarClassName: "bg-white",
-                              className: "m-2 ml-14 block",
-                              isOpen: false,
-                              minDate: today,
-                              onChange: updateDate,
-                              selected: openDate
-                            }),
-                        JsxRuntime.jsxs("div", {
-                              children: [
-                                JsxRuntime.jsx("span", {
-                                      children: JsxRuntime.jsx("i", {
-                                            className: "light-icon-file-invoice"
-                                          }),
-                                      className: "m-2 align-middle text-3xl font-light"
-                                    }),
-                                "Select your reservation type: ",
-                                JsxRuntime.jsx(ReservationTypeSelection.make, {})
-                              ],
-                              className: "align-middle text-gray-700 text-base m-2"
-                            }),
-                        JsxRuntime.jsx(Cart.StateContext.Provider.make, {
-                              children: JsxRuntime.jsxs(Cart.DispatchContext.Provider.make, {
-                                    children: [
-                                      JsxRuntime.jsx(InventoryList.make, {
-                                            openDate: openDate,
-                                            closeDate: match$1[0],
-                                            activeId: activeId,
-                                            items: configState$1.inventory
-                                          }),
-                                      JsxRuntime.jsx(Cart.make, {
-                                            _items: configState$1.inventory,
-                                            count: cartCount
-                                          })
-                                    ],
-                                    value: match$2[1]
-                                  }),
-                              value: state
-                            }),
-                        JsxRuntime.jsx("div", {
-                              children: JsxRuntime.jsx("button", {
-                                    children: "Book Reservation",
-                                    className: "mx-auto mt-4 bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded"
-                                  }),
-                              className: "w-full"
-                            })
-                      ],
-                      className: "bg-zinc-100 rounded px-4 py-4"
-                    }),
-                className: "w-full rounded shadow-lg p-4"
-              }),
-          className: "justify-center flex items-center"
-        });
-  }
-  console.log(configState);
-  return result;
+  var configState = ExecutorHook.useExecutor();
+  console.log({
+        ConfigState: configState
+      });
+  return JsxRuntime.jsx("div", {
+              children: JsxRuntime.jsx("div", {
+                    children: JsxRuntime.jsxs("div", {
+                          children: [
+                            JsxRuntime.jsxs("div", {
+                                  children: [
+                                    JsxRuntime.jsx("span", {
+                                          children: JsxRuntime.jsx("i", {
+                                                className: "light-icon-cloud"
+                                              }),
+                                          className: "m-2 align-middle text-3xl font-light"
+                                        }),
+                                    "Cloud Hardware Rental"
+                                  ],
+                                  className: "align-middle font-bold text-3xl m-2 text-zinc-700"
+                                }),
+                            JsxRuntime.jsxs("div", {
+                                  children: [
+                                    JsxRuntime.jsx("span", {
+                                          children: JsxRuntime.jsx("i", {
+                                                className: "light-icon-calendar"
+                                              }),
+                                          className: "m-2 align-middle text-3xl font-light"
+                                        }),
+                                    "Select your reservation start date: "
+                                  ],
+                                  className: "align-middle text-gray-700 text-base m-2"
+                                }),
+                            JsxRuntime.jsx(ReactDatepicker, {
+                                  calendarClassName: "bg-white",
+                                  className: "m-2 ml-14 block",
+                                  isOpen: false,
+                                  minDate: today,
+                                  onChange: updateDate,
+                                  selected: openDate
+                                }),
+                            JsxRuntime.jsxs("div", {
+                                  children: [
+                                    JsxRuntime.jsx("span", {
+                                          children: JsxRuntime.jsx("i", {
+                                                className: "light-icon-file-invoice"
+                                              }),
+                                          className: "m-2 align-middle text-3xl font-light"
+                                        }),
+                                    "Select your reservation type: ",
+                                    JsxRuntime.jsx(ReservationTypeSelection.make, {})
+                                  ],
+                                  className: "align-middle text-gray-700 text-base m-2"
+                                }),
+                            JsxRuntime.jsx(Cart.StateContext.Provider.make, {
+                                  children: JsxRuntime.jsxs(Cart.DispatchContext.Provider.make, {
+                                        children: [
+                                          JsxRuntime.jsx(InventoryList.make, {
+                                                openDate: openDate,
+                                                closeDate: match$1[0],
+                                                activeId: activeId,
+                                                items: configState.inventory
+                                              }),
+                                          JsxRuntime.jsx(Cart.make, {
+                                                _items: configState.inventory,
+                                                count: cartCount
+                                              })
+                                        ],
+                                        value: match$2[1]
+                                      }),
+                                  value: state
+                                }),
+                            JsxRuntime.jsx("div", {
+                                  children: JsxRuntime.jsx("button", {
+                                        children: "Book Reservation",
+                                        className: "mx-auto mt-4 bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded"
+                                      }),
+                                  className: "w-full"
+                                })
+                          ],
+                          className: "bg-zinc-100 rounded px-4 py-4"
+                        }),
+                    className: "w-full rounded shadow-lg p-4"
+                  }),
+              className: "justify-center flex items-center"
+            });
 }
 
 var make = Landing;
 
 export {
   str ,
-  endpoint_url ,
   addToCart ,
   removeFromCart ,
   make ,

@@ -3,6 +3,7 @@
 import * as Belt_Id from "rescript/lib/es6/belt_Id.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Js_array from "rescript/lib/es6/js_array.js";
+import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as InventoryItem from "../InventoryItem/InventoryItem.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
@@ -48,7 +49,7 @@ function InventoryList(props) {
                       children: Js_array.map((function (item) {
                               return JsxRuntime.jsx(InventoryItem.make, {
                                           item: item,
-                                          active: item.id === activeId
+                                          active: String(item.id) === Belt_Option.getWithDefault(activeId, "")
                                         }, String(item.id));
                             }), props.items),
                       className: "place-content-start grid lg:grid-cols-8 grid-cols-4 gap-4"

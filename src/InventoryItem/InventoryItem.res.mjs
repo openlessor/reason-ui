@@ -32,7 +32,7 @@ function InventoryItem(props) {
                                   style: {
                                     width: "100%"
                                   },
-                                  src: "https://placeholdr.ai/1ca27004-f6f9-413a-8dbf-6c088feabead/256/256?" + String(id)
+                                  src: "https://placeholdr.ai/1ca27004-f6f9-413a-8dbf-6c088feabead/256/256"
                                 }),
                             className: "rounded border-2 shadow m-0 p-0"
                           }),

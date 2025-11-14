@@ -14,7 +14,9 @@
   },
   "bs-dependencies": [
     "@rescript/core",
-    "@rescript/react"
+    "@rescript/react",
+    "@fattafatta/rescript-jotai",
+    "@glennsl/rescript-fetch"
   ],
   "bs-dev-dependencies": [],
   "bsc-flags": ["-open RescriptCore"]
