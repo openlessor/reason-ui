@@ -33,10 +33,8 @@ function removeFromCart(state, id) {
 }
 
 function Landing(props) {
-  var activeIdOpt = props.activeIdOpt;
   var dateB = props.dateB;
   var dateA = props.dateA;
-  var activeId = activeIdOpt !== undefined ? activeIdOpt : "";
   var now = new Date();
   var today = new Date(now.setHours(0.0, 0.0, 0.0, 0.0));
   var match = React.useState(function () {
@@ -138,7 +136,7 @@ function Landing(props) {
                                           JsxRuntime.jsx(InventoryList.make, {
                                                 openDate: openDate,
                                                 closeDate: match$1[0],
-                                                activeId: activeId,
+                                                activeId: props.activeId,
                                                 items: configState.inventory
                                               }),
                                           JsxRuntime.jsx(Cart.make, {

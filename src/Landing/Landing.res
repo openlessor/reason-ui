@@ -11,11 +11,7 @@ let removeFromCart = (state: Cart.t, id) => {
 }
 
 @react.component
-let make = (~dateA = ?, ~dateB = ?, ~activeIdOpt: option<string> = ?) => {
-    let activeId = switch activeIdOpt {
-        | Some(id) => id
-        | None => ""
-    }
+let make = (~dateA = ?, ~dateB = ?, ~activeId: option<string>) => {
     let now = Js.Date.make()
     let today = Js.Date.fromFloat(Js.Date.setHoursMSMs(now, ~hours=0.0, ~minutes=0.0, ~seconds=0.0, ~milliseconds=0.0, ()))
 
@@ -72,7 +68,7 @@ let make = (~dateA = ?, ~dateB = ?, ~activeIdOpt: option<string> = ?) => {
                 </div>
                 <Cart.StateContext.Provider value={state}>
                     <Cart.DispatchContext.Provider value={dispatch}>
-                        <InventoryList activeId={activeId} items={configState.inventory} openDate={openDate} closeDate={closeDate} />
+                        <InventoryList activeId={activeId} openDate={openDate} closeDate={closeDate} items={configState.inventory} />
                         <Cart count={cartCount} _items={configState.inventory} />
                     </Cart.DispatchContext.Provider>
                 </Cart.StateContext.Provider>

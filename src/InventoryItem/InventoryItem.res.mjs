@@ -2,6 +2,7 @@
 
 import * as Cart from "../Cart/Cart.res.mjs";
 import * as React from "react";
+import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.res.mjs";
@@ -11,9 +12,7 @@ function str(prim) {
 }
 
 function InventoryItem(props) {
-  var __active = props.active;
   var item = props.item;
-  var active = __active !== undefined ? __active : false;
   var id = item.id;
   React.useContext(Cart.DispatchContext.context);
   var cartState = React.useContext(Cart.StateContext.context);
@@ -76,7 +75,7 @@ function InventoryItem(props) {
                               JsxRuntime.jsx("p", {
                                     children: item.description,
                                     className: (
-                                      active === false ? "hidden " : ""
+                                      Caml_obj.equal(props.active, true) ? "" : "hidden "
                                     ) + "text-xs m-2"
                                   })
                             ],
@@ -87,9 +86,9 @@ function InventoryItem(props) {
                   }),
               className: "active:col-span-4 target:col-span-4 lg:active:col-span-8 lg:target:col-span-8 block",
               id: "item-" + String(id),
-              href: "/item/" + String(id),
+              href: "#",
               onClick: (function (_e) {
-                  RescriptReactRouter.push("item/" + String(id));
+                  RescriptReactRouter.replace("/item/" + String(id));
                 })
             });
 }

@@ -7,7 +7,13 @@ module IntCmp =
   })
 
 @react.component
-let make = (~openDate, ~closeDate, ~activeId = ?, ~items: array<ExecutorHook.InventoryItem.t>) => {
+let make = (~openDate, ~closeDate, ~activeId: option<string>, ~items: array<ExecutorHook.InventoryItem.t>) => {
+  Js.Console.log({"InventoryList Props": {
+    "openDate": Js.Date.toISOString(openDate),
+    "closeDate": Js.Date.toISOString(closeDate),
+    "activeId": activeId,
+    "itemsLength": Belt.Array.length(items),
+  }})
   let filterType = "all"
   let now = Js.Date.make()
   let today = Js.Date.fromFloat(
@@ -39,7 +45,7 @@ let make = (~openDate, ~closeDate, ~activeId = ?, ~items: array<ExecutorHook.Inv
         <InventoryItem
           key={Belt.Int.toString(item.id)}
           item={item}
-          active={Belt.Int.toString(item.id) == activeId->Belt.Option.getWithDefault("")}
+          active={activeId == Some(Belt.Int.toString(item.id))}
         />,
         items) |> React.array}
     </div>

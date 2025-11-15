@@ -3,7 +3,6 @@
 import * as Belt_Id from "rescript/lib/es6/belt_Id.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Js_array from "rescript/lib/es6/js_array.js";
-import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as InventoryItem from "../InventoryItem/InventoryItem.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
@@ -18,9 +17,18 @@ var IntCmp = Belt_Id.MakeComparable({
     });
 
 function InventoryList(props) {
+  var items = props.items;
   var activeId = props.activeId;
   var closeDate = props.closeDate;
   var openDate = props.openDate;
+  console.log({
+        "InventoryList Props": {
+          openDate: openDate.toISOString(),
+          closeDate: closeDate.toISOString(),
+          activeId: activeId,
+          itemsLength: items.length
+        }
+      });
   var filterType = "all";
   var now = new Date();
   var today = new Date(now.setHours(0.0, 0.0, 0.0, 0.0));
@@ -49,9 +57,9 @@ function InventoryList(props) {
                       children: Js_array.map((function (item) {
                               return JsxRuntime.jsx(InventoryItem.make, {
                                           item: item,
-                                          active: String(item.id) === Belt_Option.getWithDefault(activeId, "")
+                                          active: Caml_obj.equal(activeId, String(item.id))
                                         }, String(item.id));
-                            }), props.items),
+                            }), items),
                       className: "place-content-start grid lg:grid-cols-8 grid-cols-4 gap-4"
                     })
               ],
